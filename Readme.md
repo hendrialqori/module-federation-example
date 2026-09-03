@@ -1314,7 +1314,7 @@ Start both remotes and then run the Host.
 Open:
 
 ```text
-http://localhost:3000
+http://localhost:5000
 ```
 
 </details>
