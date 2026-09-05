@@ -381,8 +381,6 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2(@types/node@24.13.3)
 
-  packages/constracts: {}
-
   packages/contracts: {}
 
   packages/styless: {}

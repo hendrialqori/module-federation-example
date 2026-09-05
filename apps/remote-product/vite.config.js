@@ -18,6 +18,7 @@ const federationConfig = federation({
       requiredVersion: dependencies.vue,
     },
   },
+  manifest: true
 });
 
 export default defineConfig({

@@ -26,7 +26,7 @@ const federationConfig = federation({
       singleton: true,
     }
   },
-  
+  manifest: true
 });
 
 export default defineConfig({

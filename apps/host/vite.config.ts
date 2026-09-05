@@ -33,6 +33,7 @@ const federationConfig = federation({
       requiredVersion: dependencies["react-dom"],
     },
   },
+  manifest: true
 });
 
 export default defineConfig({
