@@ -1,0 +1,26 @@
+{
+  "name": "module-federation-example-monorepo",
+  "private": true,
+   "scripts": {
+    "dev:host": "pnpm --filter host dev",
+    "dev:product": "pnpm --filter remote-product dev",
+    "dev:cart": "pnpm --filter remote-cart dev",
+    "dev": "pnpm --parallel --filter ./apps/* dev",
+    "preview": "pnpm --parallel --filter ./apps/* preview",
+    "build": "pnpm -r --filter ./apps/* build",
+    "mfv": "pnpm run build && pnpm run preview",
+    "lint": "pnpm -r lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.25.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@11.25.0",
+  "type": "module"
+}

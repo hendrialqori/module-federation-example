@@ -1,0 +1,3 @@
+pnpm --filter [host/remote] add [library]
+
+pnpm --filter [host/remote] add @mf/contracts --workspace
