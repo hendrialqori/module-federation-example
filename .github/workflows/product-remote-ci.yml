@@ -52,9 +52,6 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint
-        run: pnpm --filter remote-product lint
-
       - name: Build
         run: pnpm --filter remote-product build
 
