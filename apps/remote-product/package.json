@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 5002",
+    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --port 5002",
+    "preview": "vite preview",
     "mfv": "npm run build && npm run preview"
   },
   "dependencies": {

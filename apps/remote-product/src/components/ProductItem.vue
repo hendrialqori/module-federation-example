@@ -1,41 +1,65 @@
 <script setup>
-import { ref, toRaw } from "vue";
-import { MF_EVENTS } from '@mf/contracts'
+import { ref, computed, toRaw, onBeforeUnmount } from "vue";
+import { MF_EVENTS } from "@mf/contracts";
 
-const props = defineProps(["item"]);
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+  },
+});
+
+const TITLE_MAX_LENGTH = 30;
+const DESCRIPTION_MAX_LENGTH = 60;
+const SMOKE_TEXT_DURATION = 1200;
 
 const showSmokeText = ref(false);
+let smokeTimeoutId = null;
 
-const addToCart = () => {
-  let timeoutId;
-  if (timeoutId) {
-    clearTimeout(timeoutId);
+const truncatedTitle = computed(() =>
+  truncateText(props.item.title, TITLE_MAX_LENGTH, ".."),
+);
+
+const truncatedDescription = computed(() =>
+  truncateText(props.item.description, DESCRIPTION_MAX_LENGTH),
+);
+
+const formattedPrice = computed(() => props.item.price.toFixed(2));
+
+function truncateText(text, maxLength, dots = "...") {
+  if (!text || text.length <= maxLength) {
+    return text ?? "";
   }
 
-  const event = new CustomEvent(MF_EVENTS.CART_ADD, {
-    detail: toRaw(props.item),
-  });
+  return text.slice(0, maxLength) + dots;
+}
 
-  window.dispatchEvent(event);
+function hideSmokeTextAfterDelay() {
+  clearTimeout(smokeTimeoutId);
+  smokeTimeoutId = setTimeout(() => {
+    showSmokeText.value = false;
+  }, SMOKE_TEXT_DURATION);
+}
 
+const addToCart = () => {
+  window.dispatchEvent(
+    new CustomEvent(MF_EVENTS.CART_ADD, {
+      detail: toRaw(props.item),
+    }),
+  );
+
+  // Restart the animation even if it is already running.
   showSmokeText.value = false;
-
   requestAnimationFrame(() => {
     showSmokeText.value = true;
   });
 
-  timeoutId = setTimeout(() => {
-    showSmokeText.value = false;
-  }, 1200);
+  hideSmokeTextAfterDelay();
 };
 
-const truncateText = (text, maxLength, dots = "...") => {
-  if (text.length <= maxLength) {
-    return text;
-  }
-
-  return text.slice(0, maxLength) + dots;
-};
+onBeforeUnmount(() => {
+  clearTimeout(smokeTimeoutId);
+});
 </script>
 
 <template>
@@ -43,15 +67,11 @@ const truncateText = (text, maxLength, dots = "...") => {
     <img :src="item.image" :alt="item.title" class="image" />
 
     <div class="content">
-      <h2 class="title">
-        {{ truncateText(item.title, 30, "..") }}
-      </h2>
+      <h2 class="title">{{ truncatedTitle }}</h2>
 
-      <p class="price">${{ item.price.toFixed(2) }}</p>
+      <p class="price">${{ formattedPrice }}</p>
 
-      <p class="desc">
-        {{ truncateText(item.description, 60) }}
-      </p>
+      <p class="desc">{{ truncatedDescription }}</p>
     </div>
 
     <div class="actions">

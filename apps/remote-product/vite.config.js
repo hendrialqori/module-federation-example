@@ -2,13 +2,13 @@ import vue from "@vitejs/plugin-vue";
 import path from "path";
 import exposes from "./exposes.config.js";
 
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { federation } from "@module-federation/vite";
 
 import { dependencies } from "./package.json" with { type: "json" };
 
 const federationConfig = federation({
-  dts: false, //TypeScript declaration generation for federated modules, default is true
+  dts: false,
   name: "remoteProduct",
   filename: "remoteEntry.js",
   exposes,
@@ -18,18 +18,30 @@ const federationConfig = federation({
       requiredVersion: dependencies.vue,
     },
   },
-  manifest: true
+  manifest: true,
 });
 
-export default defineConfig({
-  plugins: [vue(), federationConfig],
-  resolve: {
-    alias: {
-      "@": path.resolve(import.meta.dirname, "./src"),
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "");
+
+  return {
+    plugins: [vue(), federationConfig],
+    resolve: {
+      alias: {
+        "@": path.resolve(import.meta.dirname, "./src"),
+      },
     },
-  },
-  server: {
-    origin: "http://localhost:5002",
-    port: 5002,
-  },
+    server: {
+      origin: env.REMOTE_PRODUCT_URL,
+      port: env.REMOTE_PRODUCT_PORT
+        ? Number(env.REMOTE_PRODUCT_PORT)
+        : 5002,
+    },
+    preview: {
+      origin: env.REMOTE_PRODUCT_URL,
+      port: env.REMOTE_PRODUCT_PORT
+        ? Number(env.REMOTE_PRODUCT_PORT)
+        : 5002,
+    },
+  };
 });

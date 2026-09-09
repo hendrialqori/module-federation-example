@@ -8,7 +8,7 @@
     "dev": "pnpm --parallel --filter ./apps/* dev",
     "preview": "pnpm --parallel --filter ./apps/* preview",
     "build": "pnpm -r --filter ./apps/* build",
-    "mfv": "pnpm run build && pnpm run preview",
+    "mfp": "pnpm run build && pnpm run preview",
     "lint": "pnpm -r lint"
   },
   "keywords": [],
