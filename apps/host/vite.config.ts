@@ -46,8 +46,8 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   const federationConfig = createFederationConfig({
-    cartUrl: env.REMOTE_CART_URL,
-    productUrl: env.REMOTE_PRODUCT_URL,
+    cartUrl: env.VITE_REMOTE_CART_URL,
+    productUrl: env.VITE_REMOTE_PRODUCT_URL,
   });
 
   return {
@@ -62,12 +62,12 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      port: env.HOST_PORT ? Number(env.HOST_PORT) : 5000,
-      origin: env.HOST_URL,
+      port: env.VITE_HOST_PORT ? Number(env.VITE_HOST_PORT) : 5000,
+      origin: env.VITE_HOST_URL,
     },
     preview: {
-      port: env.HOST_PORT ? Number(env.HOST_PORT) : 5000,
-      origin: env.HOST_URL,
+      port: env.VITE_HOST_PORT ? Number(env.VITE_HOST_PORT) : 5000,
+      origin: env.VITE_HOST_URL,
     },
   };
 });

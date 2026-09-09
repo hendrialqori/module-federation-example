@@ -1,10 +1,10 @@
 {
   "latestErrorEvent": {
     "code": "TYPE-001",
-    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"\\\"C:\\\\\\\\Program Files\\\\\\\\nodejs\\\\\\\\node.exe\\\" C:\\\\Users\\\\teamh\\\\Documents\\\\code\\\\project\\\\module-federation-example\\\\node_modules\\\\.pnpm\\\\typescript@6.0.3\\\\node_modules\\\\typescript\\\\bin\\\\tsc --project C:\\\\Users\\\\teamh\\\\Documents\\\\code\\\\project\\\\module-federation-example\\\\apps\\\\remote-cart\\\\node_modules\\\\.federation\\\\tsconfig.2b76bb7a2bb99d184238fd40be50a135.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
+    "message": "Failed to generate type declaration. Execute the below cmd to reproduce and fix the error. #TYPE-001\nargs: {\"cmd\":\"\\\"C:\\\\\\\\Program Files\\\\\\\\nodejs\\\\\\\\node.exe\\\" C:\\\\Users\\\\teamh\\\\Documents\\\\code\\\\project\\\\module-federation-example\\\\node_modules\\\\.pnpm\\\\typescript@6.0.3\\\\node_modules\\\\typescript\\\\bin\\\\tsc --project C:\\\\Users\\\\teamh\\\\Documents\\\\code\\\\project\\\\module-federation-example\\\\apps\\\\remote-cart\\\\node_modules\\\\.federation\\\\tsconfig.f416052664658325d6e225094ff29357.json\"}\nView the docs to see how to solve: https://module-federation.io/guide/troubleshooting/type#type-001",
     "args": {
-      "cmd": "\"C:\\\\Program Files\\\\nodejs\\\\node.exe\" C:\\Users\\teamh\\Documents\\code\\project\\module-federation-example\\node_modules\\.pnpm\\typescript@6.0.3\\node_modules\\typescript\\bin\\tsc --project C:\\Users\\teamh\\Documents\\code\\project\\module-federation-example\\apps\\remote-cart\\node_modules\\.federation\\tsconfig.2b76bb7a2bb99d184238fd40be50a135.json"
+      "cmd": "\"C:\\\\Program Files\\\\nodejs\\\\node.exe\" C:\\Users\\teamh\\Documents\\code\\project\\module-federation-example\\node_modules\\.pnpm\\typescript@6.0.3\\node_modules\\typescript\\bin\\tsc --project C:\\Users\\teamh\\Documents\\code\\project\\module-federation-example\\apps\\remote-cart\\node_modules\\.federation\\tsconfig.f416052664658325d6e225094ff29357.json"
     },
-    "timestamp": 1788947766823
+    "timestamp": 1788949500808
   }
 }
