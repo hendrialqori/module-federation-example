@@ -1,0 +1,107 @@
+name: Remote Cart CI/CD
+
+on:
+  workflow_dispatch:
+
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "apps/remote-cart/**"
+      - "packages/contracts/**"
+      - "packages/styles/**"
+      - ".github/workflows/remote-cart.yml"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/remote-cart/**"
+      - "packages/contracts/**"
+      - "packages/styles/**"
+      - ".github/workflows/remote-cart.yml"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+
+permissions:
+  contents: read
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_REMOTE_CART_PROJECT_ID }}
+
+jobs:
+  validate:
+    name: Validate Remote Cart
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm --filter remote-cart build
+
+  deploy:
+    name: Deploy Remote Cart
+
+    needs:
+      - validate
+
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Pull Vercel Environment
+        working-directory: apps/remote-cart
+        run: >
+          pnpm dlx vercel@latest pull
+          --yes
+          --environment=production
+          --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Vercel Project
+        working-directory: apps/remote-cart
+        run: >
+          pnpm dlx vercel@latest build
+          --prod
+          --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy Production
+        working-directory: apps/remote-cart
+        run: >
+          pnpm dlx vercel@latest deploy
+          --prebuilt
+          --prod
+          --token=${{ secrets.VERCEL_TOKEN }}
