@@ -84,7 +84,6 @@ jobs:
           cache: pnpm
 
       - name: Pull Vercel Environment
-        working-directory: apps/remote-cart
         run: >
           pnpm dlx vercel@latest pull
           --yes
@@ -92,14 +91,12 @@ jobs:
           --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Vercel Project
-        working-directory: apps/remote-cart
         run: >
           pnpm dlx vercel@latest build
           --prod
           --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Production
-        working-directory: apps/remote-cart
         run: >
           pnpm dlx vercel@latest deploy
           --prebuilt
